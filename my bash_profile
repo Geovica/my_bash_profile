@@ -1,0 +1,51 @@
+#Geovic Fagel Bash Profile
+#you’ll need to install SublimeText for this bash profile to work properly
+
+#ALIASES
+#SublimeText("sub" to open sublime, and "sub ." to open sublime on the current directory you're in)
+alias sub="open -a Sublime\ Text"
+#Bash profile
+alias prof="sub ~/.bash_profile"
+alias reprof=". ~/.bash_profile"
+#Directories(make sure to change these directories/paths same with your setup)
+alias www="cd ~/Documents/www"
+alias env="cd ~/Documents/www/environment"
+alias db="cd ~/Documents/www/environment-db"
+alias wf="cd ~/Documents/www/webfront"
+alias rep="cd ~/Documents/www/repositories"
+
+#VS CODE
+alias code="open -a Visual\ Studio"
+alias vscode="code ~/.bash_profile"
+
+#Hosts
+alias host="sub /private/etc/hosts"
+#GIT
+alias gfp="git fetch; git pull"
+alias gp="git push"
+alias gb="git branch"
+alias gc="git checkout"
+alias gcd="git checkout develop"
+alias gl="git log"
+alias gaa="git add ."
+#alias gcmo="git c -m origin"
+alias gs="git status"
+#GULP
+alias gjb="gulp js-build"
+alias gsb="gulp sass-build"
+alias gbi="gulp build:indexes"
+
+#BASH COMPLETION
+#Bash completion(hit tab for completion)
+#Create and download first the .git-completion.bash file Using:
+#curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-#completion.bash -o ~/.git-completion.bash
+source ~/.git-completion.bash
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi
+
+#BRANCH HIGHLIGHTER(indicates the current branch you’re in)
+parse_git_branch() {
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
