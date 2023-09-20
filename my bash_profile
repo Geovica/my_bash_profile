@@ -1,12 +1,16 @@
-#Geovic Fagel Bash Profile
-#you’ll need to install SublimeText for this bash profile to work properly
+#Geovic Fagel ZSH Profile
+#you’ll need to install SublimeText for this zsh profile to work properly
+
+
+#Homebrew
+export PATH=/opt/homebrew/bin:$PATH
 
 #ALIASES
 #SublimeText("sub" to open sublime, and "sub ." to open sublime on the current directory you're in)
 alias sub="open -a Sublime\ Text"
 #Bash profile
-alias prof="sub ~/.bash_profile"
-alias reprof=". ~/.bash_profile"
+alias prof="sub ~/.zshrc"
+alias reprof=". ~/.zshrc"
 #Directories(make sure to change these directories/paths same with your setup)
 alias www="cd ~/Documents/www"
 alias env="cd ~/Documents/www/environment"
@@ -15,8 +19,8 @@ alias wf="cd ~/Documents/www/webfront"
 alias rep="cd ~/Documents/www/repositories"
 
 #VS CODE
-alias code="open -a Visual\ Studio"
-alias vscode="code ~/.bash_profile"
+alias code="open -a Visual\ Studio\ Code"
+alias vscode="code ~/.zshrc"
 
 #Hosts
 alias host="sub /private/etc/hosts"
@@ -35,18 +39,22 @@ alias gjb="gulp js-build"
 alias gsb="gulp sass-build"
 alias gbi="gulp build:indexes"
 
-#BASH COMPLETION
-#Bash completion(hit tab for completion)
-#Create and download first the .git-completion.bash file Using:
-#curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-#completion.bash -o ~/.git-completion.bash
-source ~/.git-completion.bash
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
-fi
 
-#BRANCH HIGHLIGHTER(indicates the current branch you’re in)
-parse_git_branch() {
- git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#Branch Highlighter
+#Directory Highligther
+
+function parse_git_branch() {
+    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
 }
-export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+COLOR_DEF=$'%f'
+COLOR_USR=$'%F{243}'
+COLOR_DIR=$'%F{197}'
+COLOR_GIT=$'%F{39}'
+setopt PROMPT_SUBST
+export PROMPT='${COLOR_USR}%n ${COLOR_DIR}%~ ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF} $ '
+
+
+
+
+
